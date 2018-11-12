@@ -1,0 +1,104 @@
+@import "animate";
+@import "utils";
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+.page-content{
+  background-color: #e3e3e2;
+  font-family: 'Microsoft YaHei';
+}
+
+.navbar-text-color{
+  color:#ffc426 !important;
+}
+
+.picker_submit{
+  .picker-item{
+    span{
+      font-size: 15px;
+    }
+  }
+}
+
+.global-card {
+  margin: 0 10px 10px 10px;
+  padding: 0 10px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+html.with-modal-sheet .global-backdrop, html.with-picker-modal .global-backdrop, html.with-panel-right-cover .global-backdrop {
+    background: #000;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    opacity: 0.5;
+    transition: all 0.3s ease-in;
+}
+.picker-columns{
+  -webkit-mask-box-image: none;
+}
+.sheet-modal  .sheet-modal-inner{
+  background: #fff;
+  overflow: auto;
+  .e-modal-item{
+    position: relative;
+    .flexbox();
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    padding: 0 10px;
+    .hairline(bottom, #ccc);
+    .coutter-wrapper{
+      .flexbox();
+      align-items: center;
+      // position: absolute;
+      z-index: 9;
+      right: 5px;
+      bottom: 5px;
+      .minus, .plus{
+        background: #f7d56c;
+        color: #000;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        font-size: 16px;
+        line-height: 20px;
+      }
+      .e-re-tent-cnum{
+        display: inline-block;
+        padding: 0 4px;
+        text-align: center;
+        vertical-align: text-bottom;
+        line-height: 1.5;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+.ios .dialog, .md .dialog{
+  border-radius: 0;
+  .dialog-inner{
+    border-radius: 0;
+    .dialog-text{
+      color: #000;
+      font-size: 16px;
+    }
+  }
+  .dialog-button{
+    border-radius: 0  !important;
+    color: #333;
+    font-size: 14px;
+  }
+}
+body, html{
+  font-family: 'Microsoft YaHei';
+}
