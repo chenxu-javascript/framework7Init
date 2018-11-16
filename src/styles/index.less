@@ -1,13 +1,50 @@
 @import "animate";
 @import "utils";
+@import "vars";
 
 *, ::before, ::after {
   box-sizing: border-box;
 }
 
 .page-content{
-  background-color: #e3e3e2;
+  background-color: #fff;
   font-family: 'Microsoft YaHei';
+}
+.ios .action_btn {
+  background: #fff;
+  padding: 0.15rem 0.3rem;
+  .button {
+    font-weight: 500;
+    border: none;
+    height: 40px;
+    line-height: 1;
+    font-size: 15px;
+    font-family: PingFangSC-Medium;
+    border-radius: 2px;
+    background: linear-gradient(to right, #00aaff, #0077ff);
+  }
+}
+/*隐藏头部标题栏的时候，需要去掉 page-content 的顶部外边距*/
+.page.no-navbar {
+  .page-content {
+    padding-top: 0px;
+  }
+}
+/*隐藏底部栏的时候，需要去掉 page-content 的底部外边距*/
+.page.no-toolbar {
+  .page-content {
+    padding-bottom: 0px;
+  }
+}
+
+input,
+textarea {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  /*解决加入js后input框输入瞬间变白的现象*/
 }
 
 .navbar-text-color{

@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Axios from "axios";
-import { bsTip } from "./util";
-import { bsWait } from "@/common/boss";
+import { bsTip, bsWait } from "./util";
 import StoreCache from "./storeCache";
 
 let cache = new StoreCache("f7");
@@ -26,8 +25,6 @@ if (isDev) {
 
 window.ZBJConfig = ZBJConfig;
 
-let loadingInstance = null;
-
 Axios.interceptors.request.use(
   function(config) {
     config.baseURL = window.ZBJConfig.API_HOST;
@@ -35,7 +32,7 @@ Axios.interceptors.request.use(
     let token = cache.get("token");
     // 处理cookie 必须要
     config = devParams(config, token);
-    if (config.method === "post" && !config.nopostChange) {
+    if (config.method === "post" && config.nopostChange) {
       config.transformRequest = function(data) {
         let ret = "";
         for (let it in data) {
@@ -69,7 +66,6 @@ Axios.interceptors.response.use(async function({ data, config }) {
   }
   if (config.method === "post") {
     await bsWait(200);
-    loadingInstance.close();
   }
 
   return data;
@@ -102,15 +98,17 @@ function devParams(config, token) {
   if (ZBJConfig.isDev) {
     if (config.method === "get") {
       if (typeof config.params === "string") {
-        config.params += "&isAjax=1";
+        config.params += "&isAjax=1&islogin=1";
       } else {
         config.params.isAjax = 1;
+        config.params.islogin = 1;
       }
     } else if (config.method === "post") {
       if (typeof config.data === "string") {
-        config.data += "&isAjax=1";
+        config.data += "&isAjax=1&islogin=1";
       } else {
         config.data.isAjax = 1;
+        config.data.islogin = 1;
       }
     }
   }
@@ -122,8 +120,8 @@ function devParams(config, token) {
     } else {
       config.data.token = token;
     }
-    return config;
   }
+  return config;
 }
 
 function bsAddReqToken(url) {

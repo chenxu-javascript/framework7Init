@@ -23,7 +23,6 @@ module.exports = {
   // https://www.foobar.com/my-app/
   // then change this to '/my-app/'
   baseUrl: BASE_URL,
-
   // tweak internal webpack configuration.
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: config => {
@@ -47,11 +46,11 @@ module.exports = {
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
   devServer: {
     //   proxy: 'localhost:3000'
-    // lintOnSave: false
-    overlay: {
-      warnings: true,
-      errors: true
-    },
-    host: "0.0.0.0"
+    // lintOnSave: true
+    // overlay: {
+    //   warnings: true,
+    //   errors: true
+    // },
+    // host: "0.0.0.0"
   }
 };

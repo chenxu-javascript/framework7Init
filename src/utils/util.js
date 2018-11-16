@@ -1,6 +1,6 @@
 import Vue from "vue";
 export var bsToast = function(msg, closeTimeout = 3000, position = "center") {
-  if (window.f7app && window.f7app.f7toast) {
+  if (window.$vm.$f7 && window.$vm.$f7.toast) {
     window.$vm.$f7.toast.show({
       text: msg,
       closeTimeout,
@@ -46,6 +46,21 @@ export var bsPromise = function(data, time) {
 };
 export var bsWait = function(time) {
   return bsPromise({}, time);
+};
+
+export var bsConfirm = function(msg, options = {}) {
+  if (window.$vm && window.$vm.$f7) {
+    return new Promise(function(resolve, reject) {
+      let { modalButtonOk, title = "" } = options;
+      let oldModalButtonOk = window.$vm.$f7.params.modalButtonOk;
+      if (modalButtonOk) {
+        window.$vm.$f7.params.modalButtonOk = modalButtonOk;
+      }
+      window.$vm.$f7.dialog.confirm(msg, title, resolve, reject);
+      window.$vm.$f7.params.modalButtonOk = oldModalButtonOk;
+    });
+  }
+  return bsPromise();
 };
 
 export var bsRunWhen = function(fn, cod, name) {
@@ -127,6 +142,23 @@ export var bsSetupRem = function () {
     throw new Error('初始化失败')
   }
 };
+
+let throwIfMissing = (param, tip = '') => {
+  throw new Error(`${param} 为必须! ${tip}`);
+};
+export var ueTrack = async function(eventName = throwIfMissing('eventName'), properties = {}) {
+  try {
+    await bsCheck(() => window['myzhubi']);
+  } catch (error) {
+    //
+  }
+  let ueAgent = window['myzhubi'] || {};
+  properties.b_type = 'Mobile';
+  await bsWait(1000);
+  ueAgent.track(eventName, {
+    properties
+  });
+}
 var Utils = {
   bsTip,
   bsPromise,
@@ -141,8 +173,9 @@ var Utils = {
 
 window.Utils = Utils;
 export default Utils;
-
+Vue.prototype.$bsToast = bsToast;
 Vue.prototype.$bsWait = bsWait;
 Vue.prototype.$bsTip = bsTip;
 Vue.prototype.$bsCheck = bsCheck;
 Vue.prototype.$debounce = debounce;
+Vue.prototype.$bsConfirm = bsConfirm;
